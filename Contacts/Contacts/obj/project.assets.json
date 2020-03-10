@@ -12950,11 +12950,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Petra\\Desktop\\REPOZITORIJI\\Contacts\\Contacts\\Contacts.csproj",
+      "projectUniqueName": "C:\\Users\\Petra\\Desktop\\REPOZITORIJI\\contactlist\\Contacts\\Contacts\\Contacts.csproj",
       "projectName": "Contacts",
-      "projectPath": "C:\\Users\\Petra\\Desktop\\REPOZITORIJI\\Contacts\\Contacts\\Contacts.csproj",
+      "projectPath": "C:\\Users\\Petra\\Desktop\\REPOZITORIJI\\contactlist\\Contacts\\Contacts\\Contacts.csproj",
       "packagesPath": "C:\\Users\\Petra\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Petra\\Desktop\\REPOZITORIJI\\Contacts\\Contacts\\obj\\",
+      "outputPath": "C:\\Users\\Petra\\Desktop\\REPOZITORIJI\\contactlist\\Contacts\\Contacts\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
