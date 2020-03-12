@@ -15,6 +15,6 @@ namespace Contacts.DTO
         public string Note { get; set; }
 
         public List<PhoneNumberDTO> PhoneNumbers { get; set; }
-        //public string PhoneNumbersString { get; set; }
+        public string PhoneNumbersString { get; set; }
     }
 }

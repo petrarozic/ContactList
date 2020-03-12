@@ -23,7 +23,7 @@
                     <td>@c.FirstName</td>
                     <td>@c.LastName</td>
                     <td>@c.City</td>
-                    <td>@String.Join(", ",  c.PhoneNumbers.Select(p =>p.Number).ToList())</td>
+                    <td>@c.PhoneNumbersString</td>
                 </tr>
             }
         </tbody>

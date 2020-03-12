@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Contacts.Interfaces;
 using Contacts.Models.Database;
 using Contacts.Repositories;
@@ -31,6 +32,8 @@ namespace Contacts
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<IContactRepository, ContactRepository>();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddMvc();
         }
