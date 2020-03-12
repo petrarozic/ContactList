@@ -1,10 +1,32 @@
-﻿
+﻿@using Contacts.ViewModels
+@model HomeViewModel
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
 </head>
 <body>
-    Index page
+    Contacts
+    <table>
+        <thead>
+            <tr>
+                <td>First name</td>
+                <td>Last name</td>
+                <td>City</td>
+                <td>Phone numbers</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var c in Model.Contacts)
+            {
+                <tr>
+                    <td>@c.FirstName</td>
+                    <td>@c.LastName</td>
+                    <td>@c.City</td>
+                    <td>@String.Join(", ",  c.PhoneNumbers.Select(p =>p.Number).ToList())</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </body>
 </html>

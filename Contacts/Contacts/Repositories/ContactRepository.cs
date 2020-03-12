@@ -38,7 +38,7 @@ namespace Contacts.Repositories
                 };
 
                 List<PhoneNumberDTO> phoneNumberDTOs = new List<PhoneNumberDTO>();
-                foreach(var p in c.PhoneNumbers)
+                foreach (var p in c.PhoneNumbers)
                 {
                     PhoneNumberDTO phoneNumberDTO = new PhoneNumberDTO
                     {
@@ -51,6 +51,7 @@ namespace Contacts.Repositories
                     phoneNumberDTOs.Add(phoneNumberDTO);
                 }
                 contactDTO.PhoneNumbers = phoneNumberDTOs;
+                //contactDTO.PhoneNumbersString = String.Join(", ", c.PhoneNumbers.Select(n => n.Number).ToList());
                 contactDTOs.Add(contactDTO);
             }
             return contactDTOs;
