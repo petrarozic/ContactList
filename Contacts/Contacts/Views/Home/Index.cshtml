@@ -3,30 +3,36 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/content/StyleSheet.css" />
     <title>Index</title>
 </head>
 <body>
-    Contacts
-    <table>
-        <thead>
-            <tr>
-                <td>First name</td>
-                <td>Last name</td>
-                <td>City</td>
-                <td>Phone numbers</td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var c in Model.Contacts)
-            {
+    <div class="header">
+        <div class="title"> Contacts </div> 
+    </div>
+    <div class="content">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>@c.FirstName</td>
-                    <td>@c.LastName</td>
-                    <td>@c.City</td>
-                    <td>@c.PhoneNumbersString</td>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>City</th>
+                    <th>Phone numbers</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.Contacts)
+                {
+                    <tr>
+                        <td>@c.FirstName</td>
+                        <td>@c.LastName</td>
+                        <td>@c.City</td>
+                        <td>@c.PhoneNumbersString</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>   
 </body>
 </html>
