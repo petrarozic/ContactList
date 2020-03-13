@@ -15,10 +15,10 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>City</th>
-                    <th>Phone numbers</th>
+                    <th>@Html.DisplayNameFor(model => model.Contacts.First().FirstName)</th>
+                    <th>@Html.DisplayNameFor(model => model.Contacts.First().LastName)</th>
+                    <th>@Html.DisplayNameFor(model => model.Contacts.First().City)</th>
+                    <th>@Html.DisplayNameFor(model => model.Contacts.First().PhoneNumbersString)</th>
                 </tr>
             </thead>
             <tbody>
