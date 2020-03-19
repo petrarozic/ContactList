@@ -9,5 +9,6 @@ namespace Contacts.Interfaces
     public interface IContactRepository
     {
         List<ContactDTO> GetAllContact();
+        ContactDTO GetContactById(int contactId);
     }
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/content/StyleSheet.css" />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <title>Index</title>
 </head>
 <body>
@@ -12,13 +13,14 @@
         <div class="title"> Contacts </div> 
     </div>
     <div class="content">
-        <table class="table table-striped">
+        <table class="table-striped">
             <thead>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.Contacts.First().FirstName)</th>
-                    <th>@Html.DisplayNameFor(model => model.Contacts.First().LastName)</th>
-                    <th>@Html.DisplayNameFor(model => model.Contacts.First().City)</th>
-                    <th>@Html.DisplayNameFor(model => model.Contacts.First().PhoneNumbersString)</th>
+                    <th style="width: 20%">@Html.DisplayNameFor(model => model.Contacts.First().FirstName)</th>
+                    <th style="width: 20%">@Html.DisplayNameFor(model => model.Contacts.First().LastName)</th>
+                    <th style="width: 20%">@Html.DisplayNameFor(model => model.Contacts.First().City)</th>
+                    <th style="width: auto">@Html.DisplayNameFor(model => model.Contacts.First().PhoneNumbersString)</th>
+                    <th style="width: 10%"></th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +31,7 @@
                         <td>@c.LastName</td>
                         <td>@c.City</td>
                         <td>@c.PhoneNumbersString</td>
+                        <td><img src="~/images/viewIcon.png" class="icon viewContact" alt="View contact" id="@c.ContactId"></td>
                     </tr>
                 }
             </tbody>
@@ -36,3 +39,14 @@
     </div>   
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        $(".viewContact").on("click", function (e) {
+            viewContact(e.target.id);
+        });
+    });
+
+    function viewContact(contactId) {
+        window.location.href = "/Contact/" + contactId;
+    }
+</script>

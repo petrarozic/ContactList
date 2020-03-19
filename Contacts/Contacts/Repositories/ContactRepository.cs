@@ -16,7 +16,6 @@ namespace Contacts.Repositories
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
 
-
         public ContactRepository(AppDbContext appDbContext, IMapper mapper)
         {
             _appDbContext = appDbContext;
@@ -31,6 +30,18 @@ namespace Contacts.Repositories
             List<ContactDTO> contactDTOs = _mapper.Map<List<ContactDTO>>(contacts);
             
             return contactDTOs;
+        }
+
+        public ContactDTO GetContactById(int contactId)
+        {
+            var contact = _appDbContext.Contacts
+                                .Where(c => c.ContactId == contactId)
+                                .Include(p => p.PhoneNumbers)
+                                .FirstOrDefault();
+            if (contact == null) return null;
+            ContactDTO contactDTO = _mapper.Map<ContactDTO>(contact);
+
+            return contactDTO;
         }
     }
 }

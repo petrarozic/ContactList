@@ -28,7 +28,6 @@ C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\bin\Debug\netc
 C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\bin\Debug\netcoreapp2.2\Contacts.pdb
 C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\bin\Debug\netcoreapp2.2\Contacts.Views.dll
 C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\bin\Debug\netcoreapp2.2\Contacts.Views.pdb
-C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\obj\Debug\netcoreapp2.2\Contacts.csprojAssemblyReference.cache
 C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\obj\Debug\netcoreapp2.2\Contacts.csproj.CoreCompileInputs.cache
 C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\obj\Debug\netcoreapp2.2\Contacts.RazorAssemblyInfo.cache
 C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\obj\Debug\netcoreapp2.2\Contacts.RazorAssemblyInfo.cs
@@ -44,3 +43,5 @@ C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\obj\Debug\netc
 C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\obj\Debug\netcoreapp2.2\Contacts.dll
 C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\obj\Debug\netcoreapp2.2\Contacts.pdb
 C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\obj\Debug\netcoreapp2.2\Contacts.csproj.CopyComplete
+C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Views\Contact\Index.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\contactlist\Contacts\Contacts\obj\Debug\netcoreapp2.2\Contacts.csprojAssemblyReference.cache
