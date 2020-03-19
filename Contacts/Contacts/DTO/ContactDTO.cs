@@ -16,8 +16,10 @@ namespace Contacts.DTO
         public string LastName { get; set; }
         [Display(Name = "City")]
         public string City { get; set; }
+        [Display(Name = "Note")]
         public string Note { get; set; }
 
+        [Display(Name = "Phone numbers")]
         public List<PhoneNumberDTO> PhoneNumbers { get; set; }
         [Display(Name = "Phone numbers")]
         public string PhoneNumbersString { get; set; }

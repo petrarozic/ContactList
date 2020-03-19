@@ -43,5 +43,13 @@ namespace Contacts.Repositories
 
             return contactDTO;
         }
+
+        public int AddContact(ContactDTO contactDTO)
+        {
+            Contact contact = _mapper.Map<Contact>(contactDTO);
+            _appDbContext.Contacts.Add(contact);
+            _appDbContext.SaveChanges();
+            return contact.ContactId;
+        }
     }
 }

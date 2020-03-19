@@ -1,5 +1,7 @@
 ﻿@using Contacts.ViewModels
 @model HomeViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -9,8 +11,9 @@
     <title>Index</title>
 </head>
 <body>
-    <div class="header">
-        <div class="title"> Contacts </div> 
+    <div class="header flex-container-row">
+        <a class="title">Contacts</a>
+        <a asp-controller="Contact" asp-action="NewContact" class="actionButton">Add new contact</a>
     </div>
     <div class="content">
         <table class="table-striped">
@@ -36,7 +39,7 @@
                 }
             </tbody>
         </table>
-    </div>   
+    </div>
 </body>
 </html>
 <script>

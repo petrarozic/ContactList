@@ -35,6 +35,11 @@ namespace Contacts.Profiles
                 );
 
             CreateMap<ICollection<PhoneNumber>, List<PhoneNumberDTO>>();
+
+            //*********************************************************************
+            CreateMap<PhoneNumberDTO, PhoneNumber>();
+            CreateMap<ContactDTO, Contact>();
+
         }
     }
 }

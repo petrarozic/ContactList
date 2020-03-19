@@ -10,8 +10,9 @@
     <title>Index</title>
 </head>
 <body>
-    <div class="header">
+    <div class="header flex-container-row">
         <a asp-controller="Home" asp-action="Index" class="title">Contacts</a>
+        <a asp-controller="Contact" asp-action="NewContact" class="actionButton">Add new contact</a>
     </div>
     <div class="content">
         <div style="width: 70%">
@@ -22,13 +23,25 @@
             else
             {
                 <div style="margin-bottom: 1em;">
-                    <div><span class="label">First name:</span> <span class="textBox">@Model.Contact.FirstName</span></div>
-                    <div><span class="label">Last name:</span> <span class="textBox">@Model.Contact.LastName</span></div>
-                    <div><span class="label">City:</span> <span class="textBox">@Model.Contact.City</span></div>
-                    <div><span class="label">Note:</span> <span class="textBox">@Model.Contact.Note</span></div>
+                    <div>
+                        <label>@Html.DisplayNameFor(model => model.Contact.FirstName)</label>
+                        <label class="textBox">@Model.Contact.FirstName</label>
+                    </div>
+                    <div>
+                        <label>@Html.DisplayNameFor(model => model.Contact.LastName)</label>
+                        <label class="textBox">@Model.Contact.LastName</label>
+                    </div>
+                    <div>
+                        <label>@Html.DisplayNameFor(model => model.Contact.City)</label>
+                        <label class="textBox">@Model.Contact.City</label>
+                    </div>
+                    <div>
+                        <label>@Html.DisplayNameFor(model => model.Contact.Note)</label>
+                        <label class="textBox">@Model.Contact.Note</label>
+                    </div>
                 </div>
                 <div>
-                    <span class="label">Phone numbers</span>
+                    <label>@Html.DisplayNameFor(model => model.Contact.PhoneNumbers)</label>
                     <table class="table-striped" style="width: 90%">
                         <tbody>
                             @foreach (var phoneNum in Model.Contact.PhoneNumbers)

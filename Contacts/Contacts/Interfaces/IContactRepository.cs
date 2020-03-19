@@ -10,5 +10,7 @@ namespace Contacts.Interfaces
     {
         List<ContactDTO> GetAllContact();
         ContactDTO GetContactById(int contactId);
+
+        int AddContact(ContactDTO contactDTO);
     }
 }

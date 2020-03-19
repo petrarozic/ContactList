@@ -32,5 +32,17 @@ namespace Contacts.Controllers
 
             return View(contactViewModel);
         }
+
+        public IActionResult NewContact()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddContact(ContactViewModel contactViewModel)
+        {
+            int contactId = _contactRepository.AddContact(contactViewModel.Contact);
+            return RedirectToAction("Index", "Contact", new { contactId = contactId });
+        }
     }
 }
