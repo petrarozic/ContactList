@@ -1,46 +1,49 @@
 ﻿@using Contacts.ViewModels
 @model ContactViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/content/StyleSheet.css" />
+    <link rel="stylesheet" href="~/content/style.css" />
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <title>Index</title>
 </head>
 <body>
     <div class="header">
-        <div class="title"> Contacts </div>
+        <a asp-controller="Home" asp-action="Index" class="title">Contacts</a>
     </div>
     <div class="content">
-        @if (Model.ErrorMessage != null)
-        {
-            @Model.ErrorMessage
-        }
-        else
-        {
-            <div>
-                <div>First name: @Model.Contact.FirstName</div>
-                <div>Last name: @Model.Contact.LastName</div>
-                <div>City: @Model.Contact.City</div>
-                <div>Note: @Model.Contact.Note</div>
-            </div>
-            <div>
-                Phone numbers
-                <table class="table-striped">
-                    <tbody>
-                        @foreach (var phoneNum in Model.Contact.PhoneNumbers)
-                        {
-                            <tr>
-                                <td>@phoneNum.Type</td>
-                                <td>@phoneNum.Number</td>
-                                <td>@phoneNum.Note</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        }
+        <div style="width: 70%">
+            @if (Model.ErrorMessage != null)
+            {
+                @Model.ErrorMessage
+            }
+            else
+            {
+                <div style="margin-bottom: 1em;">
+                    <div><span class="label">First name:</span> <span class="textBox">@Model.Contact.FirstName</span></div>
+                    <div><span class="label">Last name:</span> <span class="textBox">@Model.Contact.LastName</span></div>
+                    <div><span class="label">City:</span> <span class="textBox">@Model.Contact.City</span></div>
+                    <div><span class="label">Note:</span> <span class="textBox">@Model.Contact.Note</span></div>
+                </div>
+                <div>
+                    <span class="label">Phone numbers</span>
+                    <table class="table-striped" style="width: 90%">
+                        <tbody>
+                            @foreach (var phoneNum in Model.Contact.PhoneNumbers)
+                            {
+                                <tr>
+                                    <td>@phoneNum.Type</td>
+                                    <td>@phoneNum.Number</td>
+                                    <td>@phoneNum.Note</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
     </div>
 </body>
 </html>

@@ -14,9 +14,14 @@
 .title {
     font-size: 1.75em;
     font-weight: bold; 
+    color: black
     /*background: red;
     border-style: solid;
     border-color: blue;*/
+}
+a:hover {
+    text-decoration: none;
+    color: black;
 }
 
 .content {
@@ -27,23 +32,26 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content: center;
     /*border-style: solid;
     border-color: green;*/
 }
 
 .content table {
-    background-color: rgb(255, 255, 255);
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 0.75em;
-}
-
-table {
     width: 70%;
 }
 
 .content table thead{
     font-size: 1.25em;
+}
+
+.content table th {
+    padding: 0.5em;
+}
+
+.content table td, .content table th {
+    padding: 0.5em;
 }
 
 .icon {
@@ -52,4 +60,14 @@ table {
     margin: 2px;
     border-radius: 0.25rem;
     padding: 1px;
+}
+
+.label {
+    font-size: 1.15em;
+    padding-left: 0.75em;
+    font-style: oblique;
+}
+
+.textBox {
+    font-size: 1.25em;
 }
