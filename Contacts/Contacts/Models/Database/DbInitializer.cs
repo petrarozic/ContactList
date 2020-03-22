@@ -68,11 +68,63 @@ namespace Contacts.Models.Database
                     new PhoneNumber
                     {
                         Type = "Mobile",
-                        Number = "098111113",
-                        Note = "Rijetko dustupan"
+                        Number = "098111114",
+                        Note = "-"
                     }
                 };
                 context.SaveChanges();
+
+                var contactWithLongNote = new Contact
+                {
+                    FirstName = "Kontakt",
+                    LastName = "Bilješka",
+                    City = "Grad",
+                    Note = "Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd A 200"
+                };
+                contactWithLongNote.PhoneNumbers = new List<PhoneNumber>
+                    {
+                        new PhoneNumber
+                        {
+                            Type = "Long note",
+                            Number = "000000099",
+                            Note = "Abcd Abcd Abcd Abcd Abcd Abcd Abcd Ab 40"
+                        }
+                    };
+                context.Contacts.Add(contactWithLongNote);
+                context.SaveChanges();
+
+                var contactWithoutPhone = new Contact
+                {
+                    FirstName = "Ana",
+                    LastName = "Anić",
+                    City = "Grad",
+                    Note = "Kontakt koji nema ni jedan broj"
+                };
+                contactWithoutPhone.PhoneNumbers = new List<PhoneNumber>();
+                context.Contacts.Add(contactWithoutPhone);
+                context.SaveChanges();
+
+                for (var i = 0; i < 70; i++)
+                {
+                    var contact = new Contact
+                    {
+                        FirstName = "Ime" + i.ToString(),
+                        LastName = "Prezime" + i.ToString(),
+                        City = "Grad" + i.ToString(),
+                        Note = "Bilješka" + i.ToString()
+                    };
+                    contact.PhoneNumbers = new List<PhoneNumber>
+                    {
+                        new PhoneNumber
+                        {
+                            Type = "Phone" + i.ToString(),
+                            Number = "0000000" + i.ToString(),
+                            Note = "Bilješka o broju .."
+                        }
+                    };
+                    context.Contacts.Add(contact);
+                    context.SaveChanges();
+                }
             }
         }
     }

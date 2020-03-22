@@ -51,5 +51,18 @@ namespace Contacts.Repositories
             _appDbContext.SaveChanges();
             return contact.ContactId;
         }
+
+        public List<ContactDTO> GetAllContact(int page, int contactPerPage)
+        {
+            var contacts = _appDbContext.Contacts
+                                .Include(p => p.PhoneNumbers)
+                                .Skip(page * contactPerPage)
+                                .Take(contactPerPage); 
+
+            if (contacts == null) return null;
+            List<ContactDTO> contactDTOs = _mapper.Map<List<ContactDTO>>(contacts);
+
+            return contactDTOs;
+        }
     }
 }

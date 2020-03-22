@@ -9,5 +9,11 @@ namespace Contacts.ViewModels
     public class HomeViewModel
     {
         public List<ContactDTO> Contacts { get; set; }
+
+        public int CurrentPage { get; set; }
+        public int MinPage { get; set; }
+        public int MaxPage { get; set; }
+
+        public int ContactsPerPage { get; set; }
     }
 }

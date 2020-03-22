@@ -15,13 +15,16 @@
         <a asp-controller="Contact" asp-action="NewContact" class="actionButton">Add new contact</a>
     </div>
     <div class="content">
-        <div style="width: 70%">
-            @if (Model.ErrorMessage != null)
-            {
+        @if (Model.ErrorMessage != null)
+        {
+            <div class="errorMessage">
                 @Model.ErrorMessage
-            }
-            else
-            {
+            </div>
+
+        }
+        else
+        {
+            <div style="width: 70%">
                 <div style="margin-bottom: 1em;">
                     <div>
                         <label>@Html.DisplayNameFor(model => model.Contact.FirstName)</label>
@@ -42,22 +45,29 @@
                 </div>
                 <div>
                     <label>@Html.DisplayNameFor(model => model.Contact.PhoneNumbers)</label>
-                    <table class="table-striped" style="width: 90%">
-                        <tbody>
-                            @foreach (var phoneNum in Model.Contact.PhoneNumbers)
-                            {
-                                <tr>
-                                    <td>@phoneNum.Type</td>
-                                    <td>@phoneNum.Number</td>
-                                    <td>@phoneNum.Note</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                    @if (!Model.Contact.PhoneNumbers.Any())
+                    {
+                        <label class="textBox">No phone numbers added</label>
+                    }
+                    else
+                    {
+                        <table class="table-striped" style="width: 90%">
+                            <tbody>
+                                @foreach (var phoneNum in Model.Contact.PhoneNumbers)
+                                {
+                                    <tr>
+                                        <td>@phoneNum.Type</td>
+                                        <td>@phoneNum.Number</td>
+                                        <td>@phoneNum.Note</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
                 </div>
-            }
+            </div>
+        }
         </div>
-    </div>
 </body>
 </html>
 

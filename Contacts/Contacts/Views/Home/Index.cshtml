@@ -16,29 +16,57 @@
         <a asp-controller="Contact" asp-action="NewContact" class="actionButton">Add new contact</a>
     </div>
     <div class="content">
-        <table class="table-striped">
-            <thead>
-                <tr>
-                    <th style="width: 20%">@Html.DisplayNameFor(model => model.Contacts.First().FirstName)</th>
-                    <th style="width: 20%">@Html.DisplayNameFor(model => model.Contacts.First().LastName)</th>
-                    <th style="width: 20%">@Html.DisplayNameFor(model => model.Contacts.First().City)</th>
-                    <th style="width: auto">@Html.DisplayNameFor(model => model.Contacts.First().PhoneNumbersString)</th>
-                    <th style="width: 10%"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var c in Model.Contacts)
-                {
+        @if (!Model.Contacts.Any())
+        {
+            <div class="errorMessage">
+                No contacts to display
+            </div>
+        }
+        else
+        {
+            <table class="table-striped">
+                <thead>
                     <tr>
-                        <td>@c.FirstName</td>
-                        <td>@c.LastName</td>
-                        <td>@c.City</td>
-                        <td>@c.PhoneNumbersString</td>
-                        <td><img src="~/images/viewIcon.png" class="icon viewContact" alt="View contact" id="@c.ContactId"></td>
+                        <th style="width: 20%">@Html.DisplayNameFor(model => model.Contacts.First().FirstName)</th>
+                        <th style="width: 20%">@Html.DisplayNameFor(model => model.Contacts.First().LastName)</th>
+                        <th style="width: 20%">@Html.DisplayNameFor(model => model.Contacts.First().City)</th>
+                        <th style="width: auto">@Html.DisplayNameFor(model => model.Contacts.First().PhoneNumbersString)</th>
+                        <th style="width: 10%"></th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model.Contacts)
+                    {
+                        <tr>
+                            <td>@c.FirstName</td>
+                            <td>@c.LastName</td>
+                            <td>@c.City</td>
+                            <td>@c.PhoneNumbersString</td>
+                            <td><img src="~/images/viewIcon.png" class="icon viewContact" alt="View contact" id="@c.ContactId"></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination"></ul>
+            </nav>
+            <form asp-action="Filter" method="post">
+                <div class="recordsPerPage">
+                    <label asp-for="ContactsPerPage">Results per page:</label>
+                    <select asp-for="ContactsPerPage" id="recordsPerPage">
+                        <option asp-for="ContactsPerPage" value="5">
+                            5
+                        </option>
+                        <option asp-for="ContactsPerPage" value="10">
+                            10
+                        </option>
+                        <option asp-for="ContactsPerPage" value="15">
+                            15
+                        </option>
+                    </select>
+                </div>
+            </form>
+        }
     </div>
 </body>
 </html>
@@ -47,9 +75,127 @@
         $(".viewContact").on("click", function (e) {
             viewContact(e.target.id);
         });
+
+        setPagination(@Model.MinPage, @Model.MaxPage, @Model.CurrentPage);
+
+        $("#recordsPerPage").on("change", function (e) {
+            //console.log("recordsPerPage - change");
+            submitFilterForm();
+            e.preventDefault();
+        });
     });
 
     function viewContact(contactId) {
         window.location.href = "/Contact/" + contactId;
+    }
+
+    function setPagination(minPage, maxPage, currentPage) {
+        $(".pagination").empty();
+        var previous = $("<li>");
+        previous.text("Previous");
+        if (currentPage != minPage) {
+            previous.click(function () {
+                changePage(currentPage - 1);
+            });
+            previous.attr({ class: "page-item page-link" });
+        } else {
+            previous.attr({ class: "page-item page-link disabled" });
+        }
+        $(".pagination").append(previous);
+
+        for (var i = minPage; i <= maxPage; i++) {
+            var page = $("<li>");
+            page.attr({ id: i });
+            page.text(i + 1);
+            page.click(function (e) {
+                changePage(e.target.id);
+            });
+            if (i == currentPage) page.attr({ class: "page-item page-link active" });
+            else page.attr({ class: "page-item page-link" });
+            $(".pagination").append(page);
+        }
+
+        var next = $("<li>");
+        next.text("Next");
+        if (currentPage != maxPage) {
+            next.click(function () {
+                changePage(currentPage + 1);
+            });
+            next.attr({ class: "page-item page-link" });
+        } else {
+            next.attr({ class: "page-item page-link disabled" });
+        }
+        $(".pagination").append(next);
+        
+    }
+
+    function changePage(goToPage) {
+        var param = {
+            goToPage: goToPage,
+            recordsPerPage: $("#recordsPerPage").val()
+        };
+        getRecords(param);
+    }
+
+    function submitFilterForm() {
+        //console.log("submitFilterForm");
+        var param = {
+            goToPage: 0,
+            recordsPerPage: $("#recordsPerPage").val()
+        };
+        getRecords(param);
+    }
+
+    function getRecords(param) {
+        //console.log("getRecords");
+        $.ajax(
+            {
+                type: "GET",
+                url: "/Home/Filter",
+                dataType: "json",
+                data: param,
+                success: function (data) {
+                    //console.log("success - submitSearchForm");
+                    $("tbody").empty();
+                    if (data.contacts.length == 0) {
+                        $(".content").empty();
+                        var divError = $("<div>");
+                        divError.attr({ class: "errorMessage" });
+                        divError.text("No contacts to display");
+                        $(".content").append(divError);
+                    } else {
+                        for (var x = 0; x < data.contacts.length; x++) {
+                            var $img = $('<img>');
+                            $img.attr({ src: "/images/viewIcon.png" });
+                            $img.attr({ class: "icon viewContact" });
+                            $img.attr({ alt: "View contact" });
+                            $img.attr({ id: data.contacts[x].contactId });
+                            $img.click(function (e) {
+                                viewContact(e.target.id);
+                            });
+
+                            var $tr = $('<tr>').append(
+                                $('<td>').text(data.contacts[x].firstName),
+                                $('<td>').text(data.contacts[x].lastName),
+                                $('<td>').text(data.contacts[x].city),
+                                $('<td>').text(data.contacts[x].phoneNumbersString),
+                                $('<td>').append($img)
+                            );
+                            $("tbody").append($tr);
+                        }
+
+                        setPagination(data.minPage, data.maxPage, data.currentPage);
+                    }
+                },
+                failure: function (data) {
+                    alert(data.responseText);
+                    console.log("failure");
+                }, //End of AJAX failure function
+                error: function (data) {
+                    //debugger
+                    alert(data.responseText);
+                    console.log("error");
+                } //End of AJAX error function
+            });
     }
 </script>

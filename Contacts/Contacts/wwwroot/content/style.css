@@ -25,7 +25,7 @@ a:hover {
 }
 
 .content {
-    height: 100%;
+    min-height: 100%;
     padding: 2em;
     padding-top: 1em;
     background: rgb(188, 210, 239);
@@ -114,4 +114,35 @@ button, .buttons input {
     border-color: rgb(120, 172, 240);
     font-size: 1rem;
     margin: 0.15rem;
+}
+
+.errorMessage {
+    font-weight: bold;
+    font-size: 1.5em;
+    font-style: oblique;
+}
+
+/*-----------------------------------*/
+/*-------Page pagination-------------*/
+/*-----------------------------------*/
+.page-item.page-link {
+    cursor: pointer;
+}
+
+.page-item.page-link.active {
+    background-color: dodgerblue;
+    color: white;
+}
+
+.page-item.page-link.disabled {
+    color: grey;
+    cursor: context-menu;
+}
+
+.pagination {
+    margin-bottom: 0.2em;
+}
+
+.recordsPerPage label {
+    font-size: 0.9em;
 }
