@@ -9,7 +9,7 @@ namespace Contacts.Interfaces
     public interface IContactRepository
     {
         List<ContactDTO> GetAllContact();
-        List<ContactDTO> GetAllContact(int page, int contactPerPage);
+        List<ContactDTO> GetAllContact(int page, int contactPerPage, int sortBy);
         ContactDTO GetContactById(int contactId);
 
         int AddContact(ContactDTO contactDTO);

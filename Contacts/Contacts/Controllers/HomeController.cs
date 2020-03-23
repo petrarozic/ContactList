@@ -21,12 +21,17 @@ namespace Contacts.Controllers
         {
             HomeViewModel homeViewModel = new HomeViewModel
             {
-                Contacts = _contactRepository.GetAllContact(0, 5),
+                Contacts = _contactRepository.GetAllContact(0, 5, 1),
 
                 ContactsPerPage = 5, 
                 CurrentPage = 0, 
                 MinPage = 0
             };
+
+            if(homeViewModel.Contacts == null)
+            {
+                throw new Exception("Invalid data");
+            }
 
             int totalNumPage = (int)Math.Ceiling((decimal)_contactRepository.GetAllContact().ToList().Count / (decimal)5) -1;//Page numering start with 0
             homeViewModel.MaxPage = totalNumPage < 4 ? totalNumPage : 4;
@@ -35,14 +40,14 @@ namespace Contacts.Controllers
         }
 
         [HttpGet]
-        public JsonResult Filter (int goToPage, int recordsPerPage)
+        public JsonResult Filter (int goToPage, int recordsPerPage, int sortBy)
         {
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 CurrentPage = goToPage,
                 ContactsPerPage = recordsPerPage,
 
-                Contacts = _contactRepository.GetAllContact(goToPage, recordsPerPage) 
+                Contacts = _contactRepository.GetAllContact(goToPage, recordsPerPage, sortBy) 
             };
 
             int totalNumPage = (int)Math.Ceiling((decimal)_contactRepository.GetAllContact()

@@ -52,12 +52,54 @@ namespace Contacts.Repositories
             return contact.ContactId;
         }
 
-        public List<ContactDTO> GetAllContact(int page, int contactPerPage)
+        public List<ContactDTO> GetAllContact(int page, int contactPerPage, int sortBy)
         {
-            var contacts = _appDbContext.Contacts
+            IQueryable<Contact> contacts = null;
+            switch (sortBy)
+            {
+                case 1: //By first name - ASC
+                    contacts = _appDbContext.Contacts
                                 .Include(p => p.PhoneNumbers)
+                                .OrderBy(c => c.FirstName)
                                 .Skip(page * contactPerPage)
-                                .Take(contactPerPage); 
+                                .Take(contactPerPage);
+                    break;
+                case 2: //By last name - ASC
+                    contacts = _appDbContext.Contacts
+                                .Include(p => p.PhoneNumbers)
+                                .OrderBy(c => c.LastName)
+                                .Skip(page * contactPerPage)
+                                .Take(contactPerPage);
+                    break;
+                case 3: //By city name - ASC
+                    contacts = _appDbContext.Contacts
+                                .Include(p => p.PhoneNumbers)
+                                .OrderBy(c => c.City)
+                                .Skip(page * contactPerPage)
+                                .Take(contactPerPage);
+                    break;
+                case 4: //By first name - DESC
+                    contacts = _appDbContext.Contacts
+                                .Include(p => p.PhoneNumbers)
+                                .OrderByDescending(c => c.FirstName)
+                                .Skip(page * contactPerPage)
+                                .Take(contactPerPage);
+                    break;
+                case 5: //By last name - DESC
+                    contacts = _appDbContext.Contacts
+                                .Include(p => p.PhoneNumbers)
+                                .OrderByDescending(c => c.LastName)
+                                .Skip(page * contactPerPage)
+                                .Take(contactPerPage);
+                    break;
+                case 6: //By city name - DESC
+                    contacts = _appDbContext.Contacts
+                                .Include(p => p.PhoneNumbers)
+                                .OrderByDescending(c => c.City)
+                                .Skip(page * contactPerPage)
+                                .Take(contactPerPage);
+                    break;
+            };
 
             if (contacts == null) return null;
             List<ContactDTO> contactDTOs = _mapper.Map<List<ContactDTO>>(contacts);

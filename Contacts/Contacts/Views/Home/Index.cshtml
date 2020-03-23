@@ -24,12 +24,12 @@
         }
         else
         {
-            <table class="table-striped">
+            <table class="table-striped" id="contactTable">
                 <thead>
                     <tr>
-                        <th style="width: 20%">@Html.DisplayNameFor(model => model.Contacts.First().FirstName)</th>
-                        <th style="width: 20%">@Html.DisplayNameFor(model => model.Contacts.First().LastName)</th>
-                        <th style="width: 20%">@Html.DisplayNameFor(model => model.Contacts.First().City)</th>
+                        <th class="sortable" style="width: 20%" id="1">@Html.DisplayNameFor(model => model.Contacts.First().FirstName)</th>
+                        <th class="sortable" style="width: 20%" id="2">@Html.DisplayNameFor(model => model.Contacts.First().LastName)</th>
+                        <th class="sortable" style="width: 20%" id="3">@Html.DisplayNameFor(model => model.Contacts.First().City)</th>
                         <th style="width: auto">@Html.DisplayNameFor(model => model.Contacts.First().PhoneNumbersString)</th>
                         <th style="width: 10%"></th>
                     </tr>
@@ -83,6 +83,10 @@
             submitFilterForm();
             e.preventDefault();
         });
+
+        $(".sortable").on("click", function (e) {
+            sortTable(e);
+        });
     });
 
     function viewContact(contactId) {
@@ -129,10 +133,12 @@
         
     }
 
+    var sortBy = 1;
     function changePage(goToPage) {
         var param = {
             goToPage: goToPage,
-            recordsPerPage: $("#recordsPerPage").val()
+            recordsPerPage: $("#recordsPerPage").val(), 
+            sortBy: sortBy
         };
         getRecords(param);
     }
@@ -141,8 +147,24 @@
         //console.log("submitFilterForm");
         var param = {
             goToPage: 0,
-            recordsPerPage: $("#recordsPerPage").val()
+            recordsPerPage: $("#recordsPerPage").val(),
+            sortBy: sortBy
         };
+        getRecords(param);
+    }
+
+    function sortTable(e) {
+        //console.log("sortTable - sortBy: " + e.target.id);
+        sortBy = e.target.id;
+
+        var param = {
+            goToPage: 0,
+            recordsPerPage: $("#recordsPerPage").val(),
+            sortBy: sortBy
+        };
+
+        if (sortBy > 3) e.target.id = parseInt(e.target.id) - 3;
+        else if (sortBy < 4) e.target.id = parseInt(e.target.id) + 3;
         getRecords(param);
     }
 
