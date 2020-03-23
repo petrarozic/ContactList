@@ -33,24 +33,24 @@ namespace Contacts.Controllers
                 throw new Exception("Invalid data");
             }
 
-            int totalNumPage = (int)Math.Ceiling((decimal)_contactRepository.GetAllContact().ToList().Count / (decimal)5) -1;//Page numering start with 0
+            int totalNumPage = (int)Math.Ceiling((decimal)_contactRepository.GetAllContact(-1, -1, -1).ToList().Count / (decimal)5) -1;//Page numering start with 0
             homeViewModel.MaxPage = totalNumPage < 4 ? totalNumPage : 4;
 
             return View(homeViewModel);
         }
 
         [HttpGet]
-        public JsonResult Filter (int goToPage, int recordsPerPage, int sortBy)
+        public JsonResult Filter (int goToPage, int recordsPerPage, int sortBy, string searchByFirstName, string searchByLastName, string searchByCity, string searchByPhoneNumber)
         {
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 CurrentPage = goToPage,
                 ContactsPerPage = recordsPerPage,
 
-                Contacts = _contactRepository.GetAllContact(goToPage, recordsPerPage, sortBy) 
+                Contacts = _contactRepository.GetAllContact(goToPage, recordsPerPage, sortBy, searchByFirstName, searchByLastName, searchByCity, searchByPhoneNumber) 
             };
 
-            int totalNumPage = (int)Math.Ceiling((decimal)_contactRepository.GetAllContact()
+            int totalNumPage = (int)Math.Ceiling((decimal)_contactRepository.GetAllContact(-1, -1, -1, searchByFirstName, searchByLastName, searchByCity, searchByPhoneNumber)
                 .ToList().Count / (decimal)recordsPerPage) - 1; //Page numering start with 0
 
             var res = PagePagination(homeViewModel.CurrentPage, totalNumPage); 

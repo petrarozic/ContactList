@@ -122,6 +122,10 @@ button, .buttons input {
     font-style: oblique;
 }
 
+td .errorMessage {
+    font-weight: normal;
+}
+
 /*-----------------------------------*/
 /*-------------Pagination------------*/
 /*-----------------------------------*/

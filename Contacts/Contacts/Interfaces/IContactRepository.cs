@@ -8,8 +8,7 @@ namespace Contacts.Interfaces
 {
     public interface IContactRepository
     {
-        List<ContactDTO> GetAllContact();
-        List<ContactDTO> GetAllContact(int page, int contactPerPage, int sortBy);
+        List<ContactDTO> GetAllContact(int page, int contactPerPage, int sortBy, string searchByFirstName = null, string searchByLastName = null, string searchByCity = null, string searchByPhoneNumber = null);
         ContactDTO GetContactById(int contactId);
 
         int AddContact(ContactDTO contactDTO);

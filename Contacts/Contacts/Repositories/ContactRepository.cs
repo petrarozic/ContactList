@@ -22,16 +22,6 @@ namespace Contacts.Repositories
             _mapper = mapper;
         }
 
-        public List<ContactDTO> GetAllContact()
-        {
-            var contacts = _appDbContext.Contacts
-                                .Include(p => p.PhoneNumbers);
-            if (contacts == null) return null;
-            List<ContactDTO> contactDTOs = _mapper.Map<List<ContactDTO>>(contacts);
-            
-            return contactDTOs;
-        }
-
         public ContactDTO GetContactById(int contactId)
         {
             var contact = _appDbContext.Contacts
@@ -52,59 +42,68 @@ namespace Contacts.Repositories
             return contact.ContactId;
         }
 
-        public List<ContactDTO> GetAllContact(int page, int contactPerPage, int sortBy)
+        public List<ContactDTO> GetAllContact(int page, int contactPerPage, int sortBy, string searchByFirstName = null, string searchByLastName = null, string searchByCity = null, string searchByPhoneNumber = null)
         {
-            IQueryable<Contact> contacts = null;
-            switch (sortBy)
+            IQueryable<Contact> contacts = _appDbContext.Contacts
+                                .Include(p => p.PhoneNumbers);
+            contacts = FilterListOfContacts(contacts, searchByFirstName, searchByLastName, searchByCity, searchByPhoneNumber);
+
+            if (page != -1 && contactPerPage != -1 && sortBy != -1)
+            {
+                switch (sortBy)
             {
                 case 1: //By first name - ASC
-                    contacts = _appDbContext.Contacts
-                                .Include(p => p.PhoneNumbers)
-                                .OrderBy(c => c.FirstName)
-                                .Skip(page * contactPerPage)
-                                .Take(contactPerPage);
+                    contacts = contacts.OrderBy(c => c.FirstName);
                     break;
                 case 2: //By last name - ASC
-                    contacts = _appDbContext.Contacts
-                                .Include(p => p.PhoneNumbers)
-                                .OrderBy(c => c.LastName)
-                                .Skip(page * contactPerPage)
-                                .Take(contactPerPage);
+                    contacts = contacts.OrderBy(c => c.LastName);
                     break;
                 case 3: //By city name - ASC
-                    contacts = _appDbContext.Contacts
-                                .Include(p => p.PhoneNumbers)
-                                .OrderBy(c => c.City)
-                                .Skip(page * contactPerPage)
-                                .Take(contactPerPage);
+                    contacts = contacts.OrderBy(c => c.City);
                     break;
                 case 4: //By first name - DESC
-                    contacts = _appDbContext.Contacts
-                                .Include(p => p.PhoneNumbers)
-                                .OrderByDescending(c => c.FirstName)
-                                .Skip(page * contactPerPage)
-                                .Take(contactPerPage);
+                    contacts = contacts.OrderByDescending(c => c.FirstName);
                     break;
                 case 5: //By last name - DESC
-                    contacts = _appDbContext.Contacts
-                                .Include(p => p.PhoneNumbers)
-                                .OrderByDescending(c => c.LastName)
-                                .Skip(page * contactPerPage)
-                                .Take(contactPerPage);
+                    contacts = contacts.OrderByDescending(c => c.LastName);
                     break;
                 case 6: //By city name - DESC
-                    contacts = _appDbContext.Contacts
-                                .Include(p => p.PhoneNumbers)
-                                .OrderByDescending(c => c.City)
-                                .Skip(page * contactPerPage)
-                                .Take(contactPerPage);
+                    contacts = contacts.OrderByDescending(c => c.City);
                     break;
             };
+
+                contacts = contacts.Skip(page * contactPerPage)
+                    .Take(contactPerPage);
+            }
 
             if (contacts == null) return null;
             List<ContactDTO> contactDTOs = _mapper.Map<List<ContactDTO>>(contacts);
 
             return contactDTOs;
+        }
+
+        private IQueryable<Contact> FilterListOfContacts(IQueryable<Contact> contacts, string searchByFirstName, string searchByLastName, string searchByCity, string searchByPhoneNumber)
+        {
+            int num0 = contacts.Count();
+            if (!contacts.Any()) return contacts;
+            
+            if (searchByFirstName != null) contacts = contacts.Where(c => c.FirstName.Contains(searchByFirstName));
+            if (searchByLastName != null) contacts = contacts.Where(c => c.LastName.Contains(searchByLastName));
+            if (searchByCity != null) contacts = contacts.Where(c => c.City.Contains(searchByCity));
+            if (searchByPhoneNumber != null) contacts = contacts.Where(c => ContainsPhoneNumber(c.PhoneNumbers, searchByPhoneNumber));
+
+            int num1 = contacts.Count();
+            return contacts;
+        }
+
+        private bool ContainsPhoneNumber(ICollection<PhoneNumber> phoneNumbers, string searchByPhoneNumber)
+        {
+            foreach(var x in phoneNumbers)
+            {
+                if (x.Number.Contains(searchByPhoneNumber)) return true;
+            }
+
+            return false;
         }
     }
 }

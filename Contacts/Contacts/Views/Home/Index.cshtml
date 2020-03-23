@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="header flex-container-row">
-        <a class="title">Contacts</a>
+        <a asp-controller="Home" asp-action="Index" class="title">Contacts</a>
         <a asp-controller="Contact" asp-action="NewContact" class="actionButton">Add new contact</a>
     </div>
     <div class="content">
@@ -24,6 +24,20 @@
         }
         else
         {
+            <form asp-action="Filter" method="post" id="filterForm">
+                <div>
+                    <label>Search by:</label>
+                </div>
+                <div>
+                    <input id="searchByFirstName" placeholder="First name" />
+                    <input id="searchByLastName" placeholder="Last name" />
+                    <input id="searchByCity" placeholder="City" />
+                    <input id="searchByPhoneNumber" placeholder="Phone number" />
+                </div>
+                <div class="buttons">
+                    <input type="submit" value="Filter contacts" />
+                </div>
+            </form>
             <table class="table-striped" id="contactTable">
                 <thead>
                     <tr>
@@ -87,6 +101,12 @@
         $(".sortable").on("click", function (e) {
             sortTable(e);
         });
+
+        $("#filterForm").on("submit", function (e) {
+            //console.log("filterForm - submit");
+            submitFilterForm();
+            e.preventDefault();
+        });
     });
 
     function viewContact(contactId) {
@@ -95,6 +115,7 @@
 
     function setPagination(minPage, maxPage, currentPage) {
         $(".pagination").empty();
+        if (maxPage == -1) return;
         var previous = $("<li>");
         previous.text("Previous");
         if (currentPage != minPage) {
@@ -138,7 +159,11 @@
         var param = {
             goToPage: goToPage,
             recordsPerPage: $("#recordsPerPage").val(), 
-            sortBy: sortBy
+            sortBy: sortBy,
+            searchByFirstName: $("#searchByFirstName").val(),
+            searchByLastName: $("#searchByLastName").val(),
+            searchByCity: $("#searchByCity").val(),
+            searchByPhoneNumber: $("#searchByPhoneNumber").val()
         };
         getRecords(param);
     }
@@ -148,7 +173,11 @@
         var param = {
             goToPage: 0,
             recordsPerPage: $("#recordsPerPage").val(),
-            sortBy: sortBy
+            sortBy: sortBy, 
+            searchByFirstName: $("#searchByFirstName").val(),
+            searchByLastName: $("#searchByLastName").val(),
+            searchByCity: $("#searchByCity").val(),
+            searchByPhoneNumber: $("#searchByPhoneNumber").val()
         };
         getRecords(param);
     }
@@ -160,7 +189,11 @@
         var param = {
             goToPage: 0,
             recordsPerPage: $("#recordsPerPage").val(),
-            sortBy: sortBy
+            sortBy: sortBy,
+            searchByFirstName: $("#searchByFirstName").val(),
+            searchByLastName: $("#searchByLastName").val(),
+            searchByCity: $("#searchByCity").val(),
+            searchByPhoneNumber: $("#searchByPhoneNumber").val()
         };
 
         if (sortBy > 3) e.target.id = parseInt(e.target.id) - 3;
@@ -180,11 +213,14 @@
                     //console.log("success - submitSearchForm");
                     $("tbody").empty();
                     if (data.contacts.length == 0) {
-                        $(".content").empty();
-                        var divError = $("<div>");
-                        divError.attr({ class: "errorMessage" });
-                        divError.text("No contacts to display");
-                        $(".content").append(divError);
+                        var trError = $("<tr>");
+                        var tdError = $("<td>");
+                        tdError.attr({ colspan: "5" });
+                        tdError.attr({ class: "errorMessage" });
+                        tdError.text("No contacts to display");
+                        trError.append(tdError);
+                        $("tbody").append(trError);
+                        setPagination(data.minPage, data.maxPage, data.currentPage);
                     } else {
                         for (var x = 0; x < data.contacts.length; x++) {
                             var $img = $('<img>');
