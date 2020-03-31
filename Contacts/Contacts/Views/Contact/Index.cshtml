@@ -5,7 +5,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/content/style.css" />
+    <link rel="stylesheet" href="~/content/StyleSheet.css" />
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <title>Index</title>
 </head>
@@ -25,22 +25,25 @@
         else
         {
             <div style="width: 70%">
-                <div style="margin-bottom: 1em;">
+                <div style="margin-bottom: 1em;" class="flex-container-row">
+                    <img class="contactImg" style="margin-right: 1.5em;" src='@Url.Action("ShowProfilePhoto", "Contact", new { id = Model.Contact.ProfilePhotoId })' />
                     <div>
-                        <label>@Html.DisplayNameFor(model => model.Contact.FirstName)</label>
-                        <label class="textBox">@Model.Contact.FirstName</label>
-                    </div>
-                    <div>
-                        <label>@Html.DisplayNameFor(model => model.Contact.LastName)</label>
-                        <label class="textBox">@Model.Contact.LastName</label>
-                    </div>
-                    <div>
-                        <label>@Html.DisplayNameFor(model => model.Contact.City)</label>
-                        <label class="textBox">@Model.Contact.City</label>
-                    </div>
-                    <div>
-                        <label>@Html.DisplayNameFor(model => model.Contact.Note)</label>
-                        <label class="textBox">@Model.Contact.Note</label>
+                        <div>
+                            <label>@Html.DisplayNameFor(model => model.Contact.FirstName)</label>
+                            <label class="textBox">@Model.Contact.FirstName</label>
+                        </div>
+                        <div>
+                            <label>@Html.DisplayNameFor(model => model.Contact.LastName)</label>
+                            <label class="textBox">@Model.Contact.LastName</label>
+                        </div>
+                        <div>
+                            <label>@Html.DisplayNameFor(model => model.Contact.City)</label>
+                            <label class="textBox">@Model.Contact.City</label>
+                        </div>
+                        <div>
+                            <label>@Html.DisplayNameFor(model => model.Contact.Note)</label>
+                            <label class="textBox">@Model.Contact.Note</label>
+                        </div>
                     </div>
                 </div>
                 <div>

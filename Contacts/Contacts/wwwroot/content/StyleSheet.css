@@ -76,11 +76,15 @@ label {
 .flex-container-row {
     display: flex;
     flex-wrap: wrap;
-    text-align: center;
+    /*text-align: center;*/
 }
 
 .flex-container-row a {
     padding-right: 1em;
+    align-self: center;
+}
+
+.flex-container-row div {
     align-self: center;
 }
 
@@ -156,4 +160,13 @@ td .errorMessage {
 /*-----------------------------------*/
 .sortable{
     cursor: n-resize;
+}
+
+/*-----------------------------------*/
+/*-----------ProfilePhoto------------*/
+/*-----------------------------------*/
+.contactImg {
+    height: 200px;
+    width: 200px;
+    border-width: 0px;
 }

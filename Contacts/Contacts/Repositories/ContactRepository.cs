@@ -27,6 +27,7 @@ namespace Contacts.Repositories
             var contact = _appDbContext.Contacts
                                 .Where(c => c.ContactId == contactId)
                                 .Include(p => p.PhoneNumbers)
+                                .Include(i => i.ProfilePhoto)
                                 .FirstOrDefault();
             if (contact == null) return null;
             ContactDTO contactDTO = _mapper.Map<ContactDTO>(contact);
@@ -34,9 +35,11 @@ namespace Contacts.Repositories
             return contactDTO;
         }
 
-        public int AddContact(ContactDTO contactDTO)
+        public int AddContact(ContactDTO contactDTO, byte[] content)
         {
             Contact contact = _mapper.Map<Contact>(contactDTO);
+            contact.ProfilePhoto = _mapper.Map<ProfilePhoto>(content);
+
             _appDbContext.Contacts.Add(contact);
             _appDbContext.SaveChanges();
             return contact.ContactId;
@@ -104,6 +107,13 @@ namespace Contacts.Repositories
             }
 
             return false;
+        }
+
+        public ProfilePhoto GetProfilePhoto(int id)
+        {
+            return _appDbContext.ProfilePhotos
+                .Where(i => i.ProfilePhotoId == id)
+                .FirstOrDefault();
         }
     }
 }

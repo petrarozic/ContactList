@@ -23,5 +23,8 @@ namespace Contacts.DTO
         public List<PhoneNumberDTO> PhoneNumbers { get; set; }
         [Display(Name = "Phone numbers")]
         public string PhoneNumbersString { get; set; }
+
+        [Display(Name = "Profile photo")]
+        public int ProfilePhotoId { get; set; }
     }
 }

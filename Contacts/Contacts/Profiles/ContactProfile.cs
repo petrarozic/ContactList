@@ -20,6 +20,10 @@ namespace Contacts.Profiles
                 .ForMember(
                     cDTO => cDTO.PhoneNumbersString,
                     c => c.MapFrom(no => String.Join(", ", no.PhoneNumbers.Select(n => n.Number).ToList()))
+                )
+                .ForMember(
+                    cDTO => cDTO.ProfilePhotoId, 
+                    c => c.MapFrom(contact => contact.ProfilePhoto.ProfilePhotoId)
                 );
 
             CreateMap<ICollection<Contact>, List<ContactDTO>>();
@@ -39,7 +43,11 @@ namespace Contacts.Profiles
             //*********************************************************************
             CreateMap<PhoneNumberDTO, PhoneNumber>();
             CreateMap<ContactDTO, Contact>();
-
+            CreateMap<byte[], ProfilePhoto>()
+                .ForMember(
+                    profilePhoto => profilePhoto.Content, 
+                    bytes => bytes.MapFrom(c => c)
+                );
         }
     }
 }

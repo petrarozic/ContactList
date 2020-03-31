@@ -16,7 +16,8 @@ namespace Contacts.Models.Database
                     FirstName = "Rade",
                     LastName = "Šerbedžija",
                     City = "Bunić",
-                    Note = "Filmovi: Crveno klasje, Kiklop"
+                    Note = "Filmovi: Crveno klasje, Kiklop",
+                    ProfilePhoto = null
                 };
 
                 var contact2 = new Contact
@@ -24,7 +25,8 @@ namespace Contacts.Models.Database
                     FirstName = "Goran",
                     LastName = "Višnjić",
                     City = "Šibenik",
-                    Note = "Drama: Dobro došli u Sarajevo"
+                    Note = "Drama: Dobro došli u Sarajevo",
+                    ProfilePhoto = null
                 };
 
                 var contact3 = new Contact
@@ -32,7 +34,8 @@ namespace Contacts.Models.Database
                     FirstName = "Josipa",
                     LastName = "Lisac",
                     City = "Zagreb",
-                    Note = "Prvi samostalni album Dnevnik jedne ljubavi"
+                    Note = "Prvi samostalni album Dnevnik jedne ljubavi",
+                    ProfilePhoto = null
                 };
 
                 context.Contacts.AddRange(contact1, contact2, contact3);
@@ -79,7 +82,8 @@ namespace Contacts.Models.Database
                     FirstName = "Kontakt",
                     LastName = "Bilješka",
                     City = "Grad",
-                    Note = "Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd A 200"
+                    Note = "Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd Abcd A 200",
+                    ProfilePhoto = null
                 };
                 contactWithLongNote.PhoneNumbers = new List<PhoneNumber>
                     {
@@ -98,7 +102,8 @@ namespace Contacts.Models.Database
                     FirstName = "Ana",
                     LastName = "Anić",
                     City = "Grad",
-                    Note = "Kontakt koji nema ni jedan broj"
+                    Note = "Kontakt koji nema ni jedan broj",
+                    ProfilePhoto = null
                 };
                 contactWithoutPhone.PhoneNumbers = new List<PhoneNumber>();
                 context.Contacts.Add(contactWithoutPhone);
@@ -111,7 +116,8 @@ namespace Contacts.Models.Database
                         FirstName = "Ime" + i.ToString(),
                         LastName = "Prezime" + i.ToString(),
                         City = "Grad" + i.ToString(),
-                        Note = "Bilješka" + i.ToString()
+                        Note = "Bilješka" + i.ToString(),
+                        ProfilePhoto = null
                     };
                     contact.PhoneNumbers = new List<PhoneNumber>
                     {

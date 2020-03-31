@@ -15,5 +15,6 @@ namespace Contacts.Models
         public string Note { get; set; }
 
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
-}
+        public ProfilePhoto ProfilePhoto { get; set; }
+    }
 }
