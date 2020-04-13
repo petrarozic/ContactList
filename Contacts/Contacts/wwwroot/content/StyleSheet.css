@@ -2,6 +2,10 @@
     height: 100%;
 }
 
+body{
+    padding: 0em;
+}
+
 .header {
     display: flex;
     padding: 1em;

@@ -1,67 +1,50 @@
-﻿@using Contacts.ViewModels
-@model ContactViewModel
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/content/StyleSheet.css" />
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <title>Index</title>
-</head>
-<body>
-    <div class="header flex-container-row">
-        <a asp-controller="Home" asp-action="Index" class="title">Contacts</a>
-        <a asp-controller="Contact" asp-action="NewContact" class="actionButton">Add new contact</a>
-    </div>
-    <div class="content">
-        <form asp-action="AddContact" method="post" enctype="multipart/form-data">
-            <div style="margin-bottom: 1em;" class="flex-container-row">
-                <div>
-                    <div>
-                        <label for="Contact_FirstName">@Html.DisplayNameFor(model => model.Contact.FirstName)</label>
-                        <input asp-for="Contact.FirstName" />
-                    </div>
-                    <div>
-                        <label for="Contact_LastName">@Html.DisplayNameFor(model => model.Contact.LastName)</label>
-                        <input asp-for="Contact.LastName" />
-                    </div>
-                    <div>
-                        <label for="Contact_City">@Html.DisplayNameFor(model => model.Contact.City)</label>
-                        <input asp-for="Contact.City" />
-                    </div>
-                    <div>
-                        <label for="Contact_Note" style="vertical-align: top">@Html.DisplayNameFor(model => model.Contact.Note)</label>
-                        <textarea asp-for="Contact.Note" rows="4" cols="50"></textarea>
-                    </div>
-                    <div>
-                        <label>@Html.DisplayNameFor(model => model.Contact.ProfilePhotoId)</label>
-                        <input name="file" id="file" type="file"/>
-                    </div>
-                </div>
-                <img class="contactImg" id="imgPreview" src="" style="visibility: hidden; margin-left: 1.5em;" />
+﻿@model ContactViewModel
+
+<form asp-action="AddContact" method="post" enctype="multipart/form-data">
+    <div style="margin-bottom: 1em;" class="flex-container-row">
+        <div>
+            <div>
+                <label for="Contact_FirstName">@Html.DisplayNameFor(model => model.Contact.FirstName)</label>
+                <input asp-for="Contact.FirstName" />
             </div>
             <div>
-                <label for="Contact_PhoneNumbers">@Html.DisplayNameFor(model => model.Contact.PhoneNumbers)</label>
-                <div id="phoneNumbers">
-                    <div id="0" class="phoneNumber flex-container-row">
-                        <input asp-for="Contact.PhoneNumbers[0].Type" placeholder="Type" />
-                        <input asp-for="Contact.PhoneNumbers[0].Number" placeholder="Number" />
-                        <textarea asp-for="Contact.PhoneNumbers[0].Note" rows="1" cols="40" placeholder="Note"></textarea>
-                        <img src="~/images/delete-icon.png" id="deleteContact" class="icon" alt="Delete!">
-                    </div>
-                </div>
-                <button id="addInputsForPhoneNumber" type="button">New phone number</button>
+                <label for="Contact_LastName">@Html.DisplayNameFor(model => model.Contact.LastName)</label>
+                <input asp-for="Contact.LastName" />
             </div>
-            <div class="buttons">
-                <button><a asp-controller="Home" asp-action="Index">Cancel</a></button>
-                <button><a asp-controller="Contact" asp-action="NewContact">Reset</a></button>
-                <input type="submit" value="Add contact" />
+            <div>
+                <label for="Contact_City">@Html.DisplayNameFor(model => model.Contact.City)</label>
+                <input asp-for="Contact.City" />
             </div>
-        </form>
+            <div>
+                <label for="Contact_Note" style="vertical-align: top">@Html.DisplayNameFor(model => model.Contact.Note)</label>
+                <textarea asp-for="Contact.Note" rows="4" cols="50"></textarea>
+            </div>
+            <div>
+                <label>@Html.DisplayNameFor(model => model.Contact.ProfilePhotoId)</label>
+                <input name="file" id="file" type="file"/>
+            </div>
+        </div>
+        <img class="contactImg" id="imgPreview" src="" style="visibility: hidden; margin-left: 1.5em;" />
     </div>
-</body>
-</html>
+    <div>
+        <label for="Contact_PhoneNumbers">@Html.DisplayNameFor(model => model.Contact.PhoneNumbers)</label>
+        <div id="phoneNumbers">
+            <div id="0" class="phoneNumber flex-container-row">
+                <input asp-for="Contact.PhoneNumbers[0].Type" placeholder="Type" />
+                <input asp-for="Contact.PhoneNumbers[0].Number" placeholder="Number" />
+                <textarea asp-for="Contact.PhoneNumbers[0].Note" rows="1" cols="40" placeholder="Note"></textarea>
+                <img src="~/images/delete-icon.png" id="deleteContact" class="icon" alt="Delete!">
+            </div>
+        </div>
+        <button id="addInputsForPhoneNumber" type="button">New phone number</button>
+    </div>
+    <div class="buttons">
+        <button><a asp-controller="Home" asp-action="Index">Cancel</a></button>
+        <button><a asp-controller="Contact" asp-action="NewContact">Reset</a></button>
+        <input type="submit" value="Add contact" />
+    </div>
+</form>
+
 <script>
     $(document).ready(function () {
         $("#addInputsForPhoneNumber").click(addInputsForPhoneNumber);

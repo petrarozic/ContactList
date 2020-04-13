@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,8 +8,33 @@ namespace Contacts.Models.Database
 {
     public class DbInitializer
     {
-        public static void Seed(AppDbContext context)
+        public static async Task Seed(AppDbContext context, UserManager<ApplicationUser> _userManager)
         {
+            if (!context.ApplicationUsers.Any())
+            {
+                ApplicationUser applicationUser1 = new ApplicationUser()
+                {
+                    UserName = "user1@user.user",
+                    Email = "user1@user.user"
+                };
+                var result1 = await _userManager.CreateAsync(applicationUser1);
+                if (result1.Succeeded)
+                {
+                    await _userManager.AddPasswordAsync(applicationUser1, "User123!");
+                }
+
+                ApplicationUser applicationUser2 = new ApplicationUser()
+                {
+                    UserName = "user2@user.user",
+                    Email = "user2@user.user"
+                };
+                var result2 = await _userManager.CreateAsync(applicationUser2);
+                if (result2.Succeeded)
+                {
+                    await _userManager.AddPasswordAsync(applicationUser2, "User123!");
+                }
+            }
+
             if (!context.Contacts.Any())
             {
                 var contact1 = new Contact
@@ -109,6 +135,58 @@ namespace Contacts.Models.Database
                 context.Contacts.Add(contactWithoutPhone);
                 context.SaveChanges();
 
+                //AddUser
+                var user1 = await _userManager.FindByNameAsync("user1@user.user");
+                var user2 = await _userManager.FindByNameAsync("user2@user.user");
+
+                Random random = new Random();
+                switch (random.Next(1, 3))
+                {
+                    case 1:
+                        contact1.ApplicationUser = user1;
+                        break;
+                    case 2:
+                        contact1.ApplicationUser = user2;
+                        break;
+                }
+                switch (random.Next(1, 3))
+                {
+                    case 1:
+                        contact2.ApplicationUser = user1;
+                        break;
+                    case 2:
+                        contact2.ApplicationUser = user2;
+                        break;
+                }
+                switch (random.Next(1, 3))
+                {
+                    case 1:
+                        contact3.ApplicationUser = user1;
+                        break;
+                    case 2:
+                        contact3.ApplicationUser = user2;
+                        break;
+                }
+                switch (random.Next(1, 3))
+                {
+                    case 1:
+                        contactWithLongNote.ApplicationUser = user1;
+                        break;
+                    case 2:
+                        contactWithLongNote.ApplicationUser = user2;
+                        break;
+                }
+                switch (random.Next(1, 3))
+                {
+                    case 1:
+                        contactWithoutPhone.ApplicationUser = user1;
+                        break;
+                    case 2:
+                        contactWithoutPhone.ApplicationUser = user2;
+                        break;
+                }
+                context.SaveChanges();
+
                 for (var i = 0; i < 70; i++)
                 {
                     var contact = new Contact
@@ -128,6 +206,15 @@ namespace Contacts.Models.Database
                             Note = "Bilješka o broju .."
                         }
                     };
+                    switch (random.Next(1, 3))
+                    {
+                        case 1:
+                            contact.ApplicationUser = user1;
+                            break;
+                        case 2:
+                            contact.ApplicationUser = user2;
+                            break;
+                    }
                     context.Contacts.Add(contact);
                     context.SaveChanges();
                 }

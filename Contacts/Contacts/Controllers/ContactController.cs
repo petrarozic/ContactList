@@ -6,26 +6,33 @@ using System.Threading.Tasks;
 using Contacts.Interfaces;
 using Contacts.Models;
 using Contacts.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Contacts.Controllers
 {
+    [Authorize]
     public class ContactController : Controller
     {
         private readonly IContactRepository _contactRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ContactController(IContactRepository contactRepository)
+        public ContactController(IContactRepository contactRepository, UserManager<ApplicationUser> userManager)
         {
             _contactRepository = contactRepository;
+            _userManager = userManager;
         }
 
         [Route("Contact/{contactId:int}")]
-        public IActionResult Index(int contactId)
+        public async Task<IActionResult> Index(int contactId)
         {
+            var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+
             ContactViewModel contactViewModel = new ContactViewModel
             {
-                Contact = _contactRepository.GetContactById(contactId)
+                Contact = _contactRepository.GetContactById(contactId, applicationUser.Id)
             };
 
             if(contactViewModel.Contact == null)
@@ -42,7 +49,7 @@ namespace Contacts.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddContact(ContactViewModel contactViewModel, IFormFile file)
+        public async Task<IActionResult> AddContact(ContactViewModel contactViewModel, IFormFile file)
         {
            byte[] content = null;
            if(file != null)
@@ -63,7 +70,9 @@ namespace Contacts.Controllers
                 }
             }
 
-            int contactId = _contactRepository.AddContact(contactViewModel.Contact, content);
+            var applicationUser = await _userManager.GetUserAsync(HttpContext.User);
+
+            int contactId = _contactRepository.AddContact(contactViewModel.Contact, content, applicationUser.Id);
             return RedirectToAction("Index", "Contact", new { contactId = contactId });
         }
 

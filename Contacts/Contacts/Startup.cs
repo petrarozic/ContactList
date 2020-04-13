@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contacts.Interfaces;
+using Contacts.Models;
 using Contacts.Models.Database;
 using Contacts.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,8 @@ namespace Contacts
         {
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<AppDbContext>();
+
 
             services.AddTransient<IContactRepository, ContactRepository>();
 
@@ -44,8 +47,9 @@ namespace Contacts
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseMvcWithDefaultRoute();
                 app.UseStaticFiles();
+                app.UseAuthentication();
+                app.UseMvcWithDefaultRoute();
             }
         }
     }

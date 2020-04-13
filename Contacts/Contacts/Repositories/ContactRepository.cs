@@ -22,10 +22,11 @@ namespace Contacts.Repositories
             _mapper = mapper;
         }
 
-        public ContactDTO GetContactById(int contactId)
+        public ContactDTO GetContactById(int contactId, string userId)
         {
             var contact = _appDbContext.Contacts
                                 .Where(c => c.ContactId == contactId)
+                                .Where(c => c.ApplicationUser.Id == userId)
                                 .Include(p => p.PhoneNumbers)
                                 .Include(i => i.ProfilePhoto)
                                 .FirstOrDefault();
@@ -35,45 +36,47 @@ namespace Contacts.Repositories
             return contactDTO;
         }
 
-        public int AddContact(ContactDTO contactDTO, byte[] content)
+        public int AddContact(ContactDTO contactDTO, byte[] content, string userId)
         {
             Contact contact = _mapper.Map<Contact>(contactDTO);
             contact.ProfilePhoto = _mapper.Map<ProfilePhoto>(content);
+            contact.ApplicationUser = _mapper.Map<ApplicationUser>(userId);
 
             _appDbContext.Contacts.Add(contact);
             _appDbContext.SaveChanges();
             return contact.ContactId;
         }
 
-        public List<ContactDTO> GetAllContact(int page, int contactPerPage, int sortBy, string searchByFirstName = null, string searchByLastName = null, string searchByCity = null, string searchByPhoneNumber = null)
+        public List<ContactDTO> GetAllContact(int page, int contactPerPage, int sortBy, string userId, string searchByFirstName = null, string searchByLastName = null, string searchByCity = null, string searchByPhoneNumber = null)
         {
             IQueryable<Contact> contacts = _appDbContext.Contacts
-                                .Include(p => p.PhoneNumbers);
+                                                .Where(c => c.ApplicationUser.Id == userId)
+                                                .Include(p => p.PhoneNumbers);
             contacts = FilterListOfContacts(contacts, searchByFirstName, searchByLastName, searchByCity, searchByPhoneNumber);
 
             if (page != -1 && contactPerPage != -1 && sortBy != -1)
             {
                 switch (sortBy)
-            {
-                case 1: //By first name - ASC
-                    contacts = contacts.OrderBy(c => c.FirstName);
-                    break;
-                case 2: //By last name - ASC
-                    contacts = contacts.OrderBy(c => c.LastName);
-                    break;
-                case 3: //By city name - ASC
-                    contacts = contacts.OrderBy(c => c.City);
-                    break;
-                case 4: //By first name - DESC
-                    contacts = contacts.OrderByDescending(c => c.FirstName);
-                    break;
-                case 5: //By last name - DESC
-                    contacts = contacts.OrderByDescending(c => c.LastName);
-                    break;
-                case 6: //By city name - DESC
-                    contacts = contacts.OrderByDescending(c => c.City);
-                    break;
-            };
+                {
+                    case 1: //By first name - ASC
+                        contacts = contacts.OrderBy(c => c.FirstName);
+                        break;
+                    case 2: //By last name - ASC
+                        contacts = contacts.OrderBy(c => c.LastName);
+                        break;
+                    case 3: //By city name - ASC
+                        contacts = contacts.OrderBy(c => c.City);
+                        break;
+                    case 4: //By first name - DESC
+                        contacts = contacts.OrderByDescending(c => c.FirstName);
+                        break;
+                    case 5: //By last name - DESC
+                        contacts = contacts.OrderByDescending(c => c.LastName);
+                        break;
+                    case 6: //By city name - DESC
+                        contacts = contacts.OrderByDescending(c => c.City);
+                        break;
+                };
 
                 contacts = contacts.Skip(page * contactPerPage)
                     .Take(contactPerPage);
@@ -95,7 +98,6 @@ namespace Contacts.Repositories
             if (searchByCity != null) contacts = contacts.Where(c => c.City.Contains(searchByCity));
             if (searchByPhoneNumber != null) contacts = contacts.Where(c => ContainsPhoneNumber(c.PhoneNumbers, searchByPhoneNumber));
 
-            int num1 = contacts.Count();
             return contacts;
         }
 

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Contacts.Models;
 using Contacts.Models.Database;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -21,7 +23,8 @@ namespace Contacts
             var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<AppDbContext>();
-            DbInitializer.Seed(context);
+            var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+            DbInitializer.Seed(context, userManager).Wait();
 
             host.Run();
         }

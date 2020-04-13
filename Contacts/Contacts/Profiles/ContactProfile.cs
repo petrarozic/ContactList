@@ -48,6 +48,11 @@ namespace Contacts.Profiles
                     profilePhoto => profilePhoto.Content, 
                     bytes => bytes.MapFrom(c => c)
                 );
+            CreateMap<string, ApplicationUser>()
+                .ForMember(
+                    user => user.Id, 
+                    stringId => stringId.MapFrom(c => c)
+                );
         }
     }
 }

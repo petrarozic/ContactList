@@ -71,3 +71,15 @@ C:\Users\Petra\Desktop\REPOZITORIJI\GITHUB\ContactList\Contacts\Contacts\obj\Deb
 C:\Users\Petra\Desktop\REPOZITORIJI\GITHUB\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Contacts.dll
 C:\Users\Petra\Desktop\REPOZITORIJI\GITHUB\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Contacts.pdb
 C:\Users\Petra\Desktop\REPOZITORIJI\GITHUB\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Contacts.csproj.CopyComplete
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Login.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Logout.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Register.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\_ViewImports.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewImports.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewStart.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_LoginPartial.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.g.cshtml.cs
