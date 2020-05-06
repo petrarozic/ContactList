@@ -53,7 +53,9 @@ else
                 </table>
             }
         </div>
+        <div class="buttons" style="margin-top: 1.5rem">
+            <button><a asp-controller="Contact" asp-action="DeleteContact" asp-route-contactId="@Model.Contact.ContactId">Delete</a></button>
+            <button><a asp-controller="Contact" asp-action="EditContact" asp-route-contactId="@Model.Contact.ContactId">Edit</a></button>
+        </div>
     </div>
 }
-
-

@@ -1,0 +1,154 @@
+﻿@model ContactViewModel
+
+<form asp-action="EditContact" method="post" enctype="multipart/form-data">
+    <div style="margin-bottom: 1em;" class="flex-container-row">
+        <input asp-for="Contact.ContactId" hidden />
+        <div>
+            <div>
+                <label for="Contact_FirstName">@Html.DisplayNameFor(model => model.Contact.FirstName)</label>
+                <input asp-for="Contact.FirstName" />
+            </div>
+            <div>
+                <label for="Contact_LastName">@Html.DisplayNameFor(model => model.Contact.LastName)</label>
+                <input asp-for="Contact.LastName" />
+            </div>
+            <div>
+                <label for="Contact_City">@Html.DisplayNameFor(model => model.Contact.City)</label>
+                <input asp-for="Contact.City" />
+            </div>
+            <div>
+                <label for="Contact_Note" style="vertical-align: top">@Html.DisplayNameFor(model => model.Contact.Note)</label>
+                <textarea asp-for="Contact.Note" rows="4" cols="50"></textarea>
+            </div>
+            <div>
+                <label>@Html.DisplayNameFor(model => model.Contact.ProfilePhotoId)</label>
+                <input name="file" id="file" type="file" />
+            </div>
+        </div>
+        <img class="contactImg" id="imgPreview" style="margin-left: 1.5em;" src='@Url.Action("ShowProfilePhoto", "Contact", new { id = Model.Contact.ProfilePhotoId })' />
+    </div>
+    <div>
+        <label for="Contact_PhoneNumbers">@Html.DisplayNameFor(model => model.Contact.PhoneNumbers)</label>
+        <div id="phoneNumbers">
+            @{
+                var phoneNumCount = -1;
+                foreach (var x in Model.Contact.PhoneNumbers)
+                {
+                    phoneNumCount++;
+                    <div id="@phoneNumCount" class="phoneNumber flex-container-row">
+                        @{var typeId = "Contact_PhoneNumbers_" + phoneNumCount + "__Type"; }
+                        @{var typeName = "Contact.PhoneNumbers[" + phoneNumCount + "].Type"; }
+                        <input asp-for="@x.Type" id="@typeId" name="@typeName" placeholder="Type" />
+                        @{var numberId = "Contact_PhoneNumbers_" + phoneNumCount + "__Number"; }
+                        @{var numberName = "Contact.PhoneNumbers[" + phoneNumCount + "].Number"; }
+                        <input asp-for="@x.Number" id="@numberId" name="@numberName" placeholder="Number" />
+                        @{var noteId = "Contact_PhoneNumbers_" + phoneNumCount + "__Note"; }
+                        @{var noteName = "Contact.PhoneNumbers[" + phoneNumCount + "].Note"; }
+                        <textarea asp-for="@x.Note" id="@noteId" name="@noteName" rows="1" cols="40" placeholder="Note"></textarea>
+                        <img src="~/images/delete-icon.png" id="deleteContact" class="icon" alt="Delete!">
+                    </div>
+                }
+            }
+        </div>
+        <input id="phoneNumCount" value="@phoneNumCount" hidden />
+        <button id="addInputsForPhoneNumber" type="button">New phone number</button>
+    </div>
+    <div class="buttons">
+        <button><a asp-controller="Contact" asp-action="Index" asp-route-contactId="@Model.Contact.ContactId">Cancel</a></button>
+        <button><a asp-controller="Contact" asp-action="EditContact" asp-route-contactId="@Model.Contact.ContactId">Reset</a></button>
+        <input type="submit" value="Edit contact" />
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        phoneNum = $("#phoneNumCount").val();
+        if (phoneNum == -1) addInputsForPhoneNumber();
+
+        $("#addInputsForPhoneNumber").click(addInputsForPhoneNumber);
+        $("#deleteContact").click(deleteContact);
+
+        $("#file").change(function(e) {
+            previewImg($(this)[0]);
+        });
+
+    });
+
+    var phoneNum = 0;
+    function addInputsForPhoneNumber() {
+        phoneNum++;
+
+        var phoneDiv = $("<div>");
+        phoneDiv.attr({ class: 'phoneNumber flex-container-row' });
+        phoneDiv.attr({ id: phoneNum.toString() });
+
+        var inputType = $("<input>");
+        inputType.attr({ type: 'text' });
+        inputType.attr({ id: 'Contact_PhoneNumbers_' + phoneNum + '__Type' });
+        inputType.attr({ name: 'Contact.PhoneNumbers[' + phoneNum + '].Type' });
+        inputType.attr({ placeholder: 'Type' });
+
+        var inputNumber = $("<input>");
+        inputNumber.attr({ type: 'text' });
+        inputNumber.attr({ id: 'Contact_PhoneNumbers_' + phoneNum + '__Number' });
+        inputNumber.attr({ name: 'Contact.PhoneNumbers[' + phoneNum + '].Number' });
+        inputNumber.attr({ placeholder: 'Number' });
+
+        var inputNote = $("<textarea>");
+        inputNote.attr({ type: 'text' });
+        inputNote.attr({ id: 'Contact_PhoneNumbers_' + phoneNum + '__Note' });
+        inputNote.attr({ name: 'Contact.PhoneNumbers[' + phoneNum + '].Note' });
+        inputNote.attr({ placeholder: 'Note' });
+        inputNote.attr({ rows: '1' });
+        inputNote.attr({ cols: '40' });
+
+        var imgDelete = $("<img>");
+        imgDelete.attr({ src: "/images/delete-icon.png" });
+        imgDelete.attr({ id: 'deleteContact' });
+        imgDelete.attr({ alt: "Delete!" });
+        imgDelete.attr({ class: "icon" });
+        imgDelete.click(deleteContact);
+
+        phoneDiv.append(inputType);
+        phoneDiv.append(inputNumber);
+        phoneDiv.append(inputNote);
+        phoneDiv.append(imgDelete);
+
+        $("#phoneNumbers").append(phoneDiv);
+    }
+
+    function deleteContact() {
+        if (phoneNum > 0) {
+            console.log("phoneNum > 0");
+            var phoneNumberId = event.srcElement.parentElement.id;
+            console.log("phoneNumberId = " + phoneNumberId);
+
+            var x;
+            for (x = parseInt(phoneNumberId); x < $("#phoneNumbers").children().length - 1; x++) {
+                xNext = x + 1;
+                $("#Contact_PhoneNumbers_" + x + "__Type").val($("#Contact_PhoneNumbers_" + xNext + "__Type").val());
+                $("#Contact_PhoneNumbers_" + x + "__Number").val($("#Contact_PhoneNumbers_" + xNext + "__Number").val());
+                $("#Contact_PhoneNumbers_" + x + "__Note").val($("#Contact_PhoneNumbers_" + xNext + "__Note").val());
+            }
+
+            $("#phoneNumbers").children().last().remove();
+            phoneNum--;
+        } else {
+            if (phoneNum == 0) {
+                $("#Contact_PhoneNumbers_0__Type").val("");
+                $("#Contact_PhoneNumbers_0__Number").val("");
+                $("#Contact_PhoneNumbers_0__Note").val("");
+            }
+        }
+    }
+
+    function previewImg(e) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#imgPreview').css('visibility', 'visible');
+            $('#imgPreview').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(e.files[0]);
+    }
+</script>
+

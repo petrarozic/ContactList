@@ -83,3 +83,5 @@ C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netc
 C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
 C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.g.cshtml.cs
 C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Warning.g.cshtml.cs
+C:\Users\Petra\Desktop\REPOZITORIJI\ContactList\Contacts\Contacts\obj\Debug\netcoreapp2.2\Razor\Views\Contact\EditContact.g.cshtml.cs

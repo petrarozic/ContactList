@@ -15,5 +15,8 @@ namespace Contacts.Interfaces
         int AddContact(ContactDTO contactDTO, byte[] content, string userId);
 
         ProfilePhoto GetProfilePhoto(int id);
+        bool DeleteContact(int contactId, string userId);
+        bool CanEditContact(int contactId, string userId);
+        void EditRecipe(ContactDTO contact, byte[] content);
     }
 }

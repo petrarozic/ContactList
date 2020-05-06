@@ -25,11 +25,12 @@ namespace Contacts.Repositories
         public ContactDTO GetContactById(int contactId, string userId)
         {
             var contact = _appDbContext.Contacts
-                                .Where(c => c.ContactId == contactId)
+                                .Where(c => c.ContactId == contactId) 
                                 .Where(c => c.ApplicationUser.Id == userId)
                                 .Include(p => p.PhoneNumbers)
                                 .Include(i => i.ProfilePhoto)
                                 .FirstOrDefault();
+
             if (contact == null) return null;
             ContactDTO contactDTO = _mapper.Map<ContactDTO>(contact);
 
@@ -116,6 +117,83 @@ namespace Contacts.Repositories
             return _appDbContext.ProfilePhotos
                 .Where(i => i.ProfilePhotoId == id)
                 .FirstOrDefault();
+        }
+
+        public bool DeleteContact(int contactId, string userId)
+        {
+            if (!OwnerOfContact(contactId, userId)) return false;
+
+            try
+            {
+                Contact contact = _appDbContext.Contacts
+                                    .Where(c => c.ContactId == contactId)
+                                    .Where(c => c.ApplicationUser.Id == userId)
+                                    .Include(p => p.PhoneNumbers)
+                                    .Include(i => i.ProfilePhoto)
+                                    .FirstOrDefault();
+
+                foreach(var x in contact.PhoneNumbers)
+                {
+                    _appDbContext.Remove(x);
+                }
+
+                _appDbContext.Remove(contact);
+                _appDbContext.SaveChanges();
+            }
+            catch (InvalidCastException e)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CanEditContact(int contactId, string userId)
+        {
+            return OwnerOfContact(contactId, userId);
+        }
+
+        private bool OwnerOfContact(int contactId, string userId)
+        {
+            var foreignKey = _appDbContext.Contacts
+                                .Where(c => c.ContactId == contactId)
+                                .Select(c => c.ApplicationUser.Id)
+                                .FirstOrDefault();
+
+            if (foreignKey != userId) return false;
+            return true;
+        }
+
+        public void EditRecipe(ContactDTO contact, byte[] content)
+        {
+            var currentContact = _appDbContext.Contacts
+                                .Where(c => c.ContactId == contact.ContactId)
+                                .Include(p => p.PhoneNumbers)
+                                .Include(i => i.ProfilePhoto)
+                                .FirstOrDefault();
+
+            currentContact.FirstName = contact.FirstName; 
+            currentContact.LastName= contact.LastName; 
+            currentContact.Note= contact.Note;
+            currentContact.City = contact.City;
+
+            currentContact.PhoneNumbers.Clear();
+            foreach(var x in contact.PhoneNumbers)
+            {
+                currentContact.PhoneNumbers.Add(
+                        new PhoneNumber
+                        {
+                            Type = x.Type,
+                            Number = x.Number,
+                            Note = x.Note
+                        }
+                    );
+            }
+
+            if (content != null)
+                if (currentContact.ProfilePhoto != null) currentContact.ProfilePhoto.Content = content;
+                else currentContact.ProfilePhoto = new ProfilePhoto { Content = content };
+
+            _appDbContext.SaveChanges();
         }
     }
 }
